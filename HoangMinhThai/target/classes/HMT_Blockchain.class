@@ -1,0 +1,63 @@
+ ˛∫æ   ?]  HMT_Blockchain  java/lang/Object 
+blockchain Ljava/util/ArrayList; 	Signature "Ljava/util/ArrayList<LVNPT_Thai;>; UTXOs Ljava/util/HashMap; :Ljava/util/HashMap<Ljava/lang/String;LTransactionOutput;>; 
+difficulty I minimumTransaction F Kho LStore; CuaHang genesisTransaction LTransaction; <clinit> ()V Code  java/util/ArrayList
+     <init>	       java/util/HashMap
+  	  # 	 
+	  %  =ÃÃÕ	  (   LineNumberTable LocalVariableTable
+   this LHMT_Blockchain; main ([Ljava/lang/String;)V 1 2org/bouncycastle/jce/provider/BouncyCastleProvider
+ 0 
+ 4 6 5 java/security/Security 7 8 addProvider (Ljava/security/Provider;)I : Store
+ 9 	  =  	  ?   A java/util/Scanner	 C E D java/lang/System F G in Ljava/io/InputStream;
+ @ I  J (Ljava/io/InputStream;)V	 C L M N out Ljava/io/PrintStream; P #So luong VNPT_Net_Router trong kho:
+ R T S java/io/PrintStream U V println (Ljava/lang/String;)V
+ @ X Y Z nextInt ()I \ +So luong VNPT_Net_Router cua hang dang con: ^ :Nhap so luong VNPT_Net_Router chuyen tu kho sang cua hang: ` CVuot qua so luong VNPT_Net_Router trong kho, vui long nhap lai!!!!! b Transaction	 9 d e f 	publicKey Ljava/security/PublicKey;
+ a h  i K(Ljava/security/PublicKey;Ljava/security/PublicKey;FLjava/util/ArrayList;)V	  k  	 9 m n o 
+privateKey Ljava/security/PrivateKey;
+ a q r s generateSignature (Ljava/security/PrivateKey;)V u 0	 a w x y transactionId Ljava/lang/String;	 a { |  outputs ~ TransactionOutput	 a Ä Å f 
+reciepient	 a É Ñ  value
+ } Ü  á /(Ljava/security/PublicKey;FLjava/lang/String;)V
+  â ä ã add (Ljava/lang/Object;)Z
+  ç é è get (I)Ljava/lang/Object;	 } ë í y id
+  î ï ñ put 8(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object; ò Dang tao khoi....  ö 	VNPT_Thai
+ ô ú  V
+ ô û ü † addTransaction (LTransaction;)Z
+  ¢ £ § addBlock (LVNPT_Thai;)V	 ô ¶ ß y hash © java/lang/StringBuilder ´ )
+So luong VNPT_Net_Router trong kho la : 
+ ® ú
+ 9 Æ Ø ∞ 
+getBalance ()F
+ ® ≤ ≥ ¥ append (F)Ljava/lang/StringBuilder;
+ ® ∂ ∑ ∏ toString ()Ljava/lang/String; ∫ ,
+So luong VNPT_Net_Router tai cua hang la :  º /
+Chuyen VNPT_Net_Router tu kho sang cua hang...
+ 9 æ ø ¿ 	sendFunds )(Ljava/security/PublicKey;F)LTransaction; ¬ 0
+So luong VNPT_Net_Router trong kho con lai la:  ƒ 2So luong VNPT_Net_Router hien co cua cua hang la: 
+  ∆ « » isChainValid ()Ljava/lang/Boolean; args [Ljava/lang/String; Kho_VNPT CuaHang_VNPT x i scanner Ljava/util/Scanner; coinbase genesis LVNPT_Thai; block1 StackMapTable   ÿ java/lang/String
+ ◊ ⁄  € ([C)V
+ ◊ › ﬁ ﬂ replace (CC)Ljava/lang/String;
+ ô · ‚ ∏ calculateHash
+ ◊ ‰ Â ã equals Á #Ma bam hien tai khong khop
+ È Î Í java/lang/Boolean Ï Ì valueOf (Z)Ljava/lang/Boolean;	 ô Ô  y previousHash Ú #Ma bam khoi truoc khong khop
+ ◊ Ù ı ˆ 	substring (II)Ljava/lang/String; ¯  #Khoi nay khong dao duoc do loi!	 ô ˙ ˚  transactions
+ a ˝ ˛ ˇ verifySignature ()Z #Chu ky so cua giao dich (
+ ® ≥ (I)Ljava/lang/StringBuilder; ) khong hop le
+ ® ≥	 -(Ljava/lang/String;)Ljava/lang/StringBuilder;
+ a ∞ getInputsValue
+ a ∞ getOutputsValue 5#c√°c dau vao khong khop voi dau ra trong giao dich ( )	 a  inputs
+  iterator ()Ljava/util/Iterator; java/util/Iterator  next ()Ljava/lang/Object;" TransactionInput	!$% y transactionOutputId
+ ' é( &(Ljava/lang/Object;)Ljava/lang/Object;* )#Cac dau vao tham chieu trong giao dich (, ) bi thieu!	!./0 UTXO LTransactionOutput;	 } É3 ) co gia tri khong hop le
+ 56( remove89 ˇ hasNext	 } Ä< #Giao dich(> ) co nguoi nhan khong dung!	 a@A f senderC #Dau ra cua giao dich (E ) khong dung voi nguoi gui.
+ GH Z sizeJ Chuoi khong hop le! currentBlock previousBlock 
+hashTarget 	tempUTXOs 
+tempOutput t currentTransaction input LTransactionInput; output LocalVariableTypeTable
+ ôWXY 	mineBlock (I)V newBlock 
+SourceFile HMT_Blockchain.java !      	         	 	 
+       	     	     	     	     	             N      ª Y∑ ≥ ª Y∑ !≥ "≥ $&≥ '±    )        
+ 	       *             /     *∑ +±    )        *        , -   	 . /    L  	  ª 0Y∑ 2∏ 3Wª 9Y∑ ;≥ <ª 9Y∑ ;≥ >6ª @Y≤ B∑ H:≤ KO∂ Q∂ W<≤ K[∂ Q∂ W=≤ K]∂ Q∂ W>ß ≤ K_∂ Q∂ W>£ˇª 9Y∑ ;:ª aY¥ c≤ <¥ cÜ∑ g≥ j≤ j¥ l∂ p≤ jtµ v≤ j¥ zª }Y≤ j¥ ≤ j¥ Ç≤ j¥ v∑ Ö∂ àW≤ "≤ j¥ z∂ å¿ }¥ ê≤ j¥ z∂ å¿ }∂ ìWª aY¥ c≤ >¥ cÜ∑ g≥ j≤ j¥ l∂ p≤ jtµ v≤ j¥ zª }Y≤ j¥ ≤ j¥ Ç≤ j¥ v∑ Ö∂ àW≤ "≤ j¥ z∂ å¿ }¥ ê≤ j¥ z∂ å¿ }∂ ìW≤ Kó∂ Qª ôYt∑ õ:≤ j∂ ùW∏ °ª ôY¥ •∑ õ:≤ Kª ®Y™∑ ¨≤ <∂ ≠∂ ±∂ µ∂ Q≤ Kª ®Yπ∑ ¨≤ >∂ ≠∂ ±∂ µ∂ Q≤ Kª∂ Q≤ <≤ >¥ cÜ∂ Ω∂ ùW∏ °≤ Kª ®Y¡∑ ¨≤ <∂ ≠∂ ±∂ µ∂ Q≤ Kª ®Y√∑ ¨≤ >∂ ≠∂ ±∂ µ∂ Q∏ ≈W±    )   ¢ (          "  .  6  <  D   J ! R " X # [ $ c % i # n ' w + è , ö - ¢ . ≈ / È 1 2 3 47 5[ 7c 8n 9w :| =ä >• ?¿ @» A‹ B· C¸ D E G *   \ 	   …     <‡ À   J“ Ã   Xƒ Õ   "˙ Œ   .Ó œ –  w• —  n Æ “ ” ä í ‘ ”  ’    ˇ [  ÷ @   	 « »    ß  
+  áª ◊Y≤ $º∑ Ÿ0∂ ‹Mª Y∑ !N-≤ j¥ z∂ å¿ }¥ ê≤ j¥ z∂ å¿ }∂ ìW6ß.≤ ∂ å¿ ôK≤ d∂ å¿ ôL*¥ •*∂ ‡∂ „ö ≤ KÊ∂ Q∏ Ë∞+¥ •*¥ Ó∂ „ö ≤ KÒ∂ Q∏ Ë∞*¥ •≤ $∂ Û,∂ „ö ≤ K˜∂ Q∏ Ë∞6ß™*¥ ˘∂ å¿ a:∂ ¸ö &≤ Kª ®Y ∑ ¨∂∂∂ µ∂ Q∏ Ë∞∂
+∂ïô &≤ Kª ®Y∑ ¨∂∂∂ µ∂ Q∏ Ë∞¥∂:	ß É	π ¿!:-¥#∂&¿ }:« &≤ Kª ®Y)∑ ¨∂+∂∂ µ∂ Q∏ Ë∞¥-¥1¥1ïô &≤ Kª ®Y)∑ ¨∂2∂∂ µ∂ Q∏ Ë∞-¥#∂4W	π7 öˇy¥ z∂:	ß 	π ¿ }:-¥ ê∂ ìW	π7 öˇ·¥ z∂ å¿ }¥:¥ • &≤ Kª ®Y;∑ ¨∂=∂∂ µ∂ Q∏ Ë∞¥ z∂ å¿ }¥:¥?• &≤ Kª ®YB∑ ¨∂D∂∂ µ∂ Q∏ Ë∞Ñ*¥ ˘∂F°˛PÑ≤ ∂F°˝Õ≤ KI∂ Q∏ Ë∞    )   ∫ .   L  M  N = Q C S O T ] V k W s X x [ Ü \ é ] ì ` • a ≠ b ≤ g ∏ h ∆ j Œ k Ï l Ò n ˇ o p" s; tI vN wl xq {Ç |† }• ÄØ sπ É“ Ñﬁ ÉË áˇ à â" ã9 åW ç\ gk Qy ìÇ î *   f 
+ OK ”   ]L ”  tM y  lN 
+  @9 Œ  I fO0  µ∂P   ∆ñQ  ; tRS “ T0 U     lN   ’   – ˇ C    ◊   ˇ 4  ô ô ◊   ˇ   ô ô ◊    ¸ 8 a0ˇ  
+ ô ô ◊   a   ˇ A 
+ ô ô ◊  } a!  3ˇ 	 
+ ô ô ◊   a   ˇ C  ô ô ◊   a  ˙ 9ˇ     ◊    	 £ §     B     *≤ $∂V≤ *∂ àW±    )       ò  ô  ö *       Z ”   [   \

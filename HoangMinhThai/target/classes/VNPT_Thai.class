@@ -1,0 +1,33 @@
+ ˛∫æ   ? ê  	VNPT_Thai  java/lang/Object UTXOs Ljava/util/HashMap; 	Signature 9Ljava/util/HashMap<Ljava/lang/Object;Ljava/lang/Object;>; hash Ljava/lang/String; previousHash 
+merkleRoot transactions Ljava/util/ArrayList; $Ljava/util/ArrayList<LTransaction;>; 	timeStamp J nonce I <init> (Ljava/lang/String;)V Code
+     ()V  java/util/ArrayList
+  	    	     
+ " java/util/Date
+ ! 
+ ! % & ' getTime ()J	  )  
+  + , - calculateHash ()Ljava/lang/String;	  / 	 
+ LineNumberTable LocalVariableTable this LVNPT_Thai; 5 java/lang/StringBuilder
+ 7 9 8 java/lang/String : ; valueOf &(Ljava/lang/Object;)Ljava/lang/String;
+ 4 =  
+ ? A @ java/lang/Long B C toString (J)Ljava/lang/String;
+ 4 E F G append -(Ljava/lang/String;)Ljava/lang/StringBuilder;	  I  
+ K M L java/lang/Integer B N (I)Ljava/lang/String;	  P  
+
+ 4 R B -
+ T V U 
+StringUtil W X applySha256 &(Ljava/lang/String;)Ljava/lang/String; calculatedhash 	mineBlock (I)V
+ T ] ^ _ getMerkleRoot )(Ljava/util/ArrayList;)Ljava/lang/String;
+ T a b N getDificultyString
+ 7 d e f 	substring (II)Ljava/lang/String;
+ 7 h i j equals (Ljava/lang/Object;)Z	 l n m java/lang/System o p out Ljava/io/PrintStream; r Block Mined!!! : 
+ t v u java/io/PrintStream w  println 
+difficulty target StackMapTable addTransaction (LTransaction;)Z ~ 0
+ Ä Ç Å Transaction É Ñ processTransaction ()Z Ü Giao dich khong xu ly duoc!.
+  à â j add ã +Giao dich da duoc them thanh cong vao khoi. transaction LTransaction; 
+SourceFile VNPT_Thai.java !      	          	 
+     
+     
+                              s     +*∑ *ª Y∑ µ *+µ *ª !Y∑ #∂ $µ (**∂ *µ .±    0              "  *  1       + 2 3     +  
+   , -     ~     2ª 4Y*¥ ∏ 6∑ <*¥ (∏ >∂ D*¥ H∏ J∂ D*¥ O∂ D∂ Q∏ SL+∞    0            "  )  ,  0  1       2 2 3   0  Y 
+   Z [     ∏     O**¥ ∏ \µ O∏ `Mß *Y¥ H`µ H**∂ *µ .*¥ .∂ c,∂ gôˇ·≤ kª 4Yq∑ <*¥ .∂ D∂ Q∂ s±    0   "    $  %  &  '  ( % & 5 * N + 1        O 2 3     O x    ? y 
+  z   	 ¸  7  { |     ê     6+« ¨}*¥ ∂ gö +∂ ö ≤ kÖ∂ s¨*¥ +∂ áW≤ kä∂ s¨    0   "    0  1  2  3 ! 4 # 8 , 9 4 : 1       6 2 3     6 å ç  z      é    è
